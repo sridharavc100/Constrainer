@@ -93,6 +93,14 @@ def postprocessing(rawdf):
 	rawdf.loc[rawdf[rawdf['Allocated']==95].index,'Constraint'] = 'No Change - CAM Constraint'
 
 	rawdf.loc[rawdf[rawdf['Allocated']==999].index,'Constraint'] = 'No Change - Out of Scope'
+
+	# Is the integrity of the work order preserved ? If not preserve it with Out of Scope Items
+	for cnt in rawdf['Order'].unique():
+		if len(rawdf[rawdf['Order']==cnt]['ESD_WeekNumber'].unique()) <= 1 : 
+			if len(rawdf[rawdf['Order']==cnt]['AlternateESD'].unique()) > 1 :
+				tochange = rawdf[rawdf['Order']==cnt]['AlternateESD'].max()
+				rawdf.loc[rawdf[rawdf['Order']==cnt].index,'AlternateESD'] = tochange
+				
 	return rawdf
 	
 

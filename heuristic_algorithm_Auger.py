@@ -18,7 +18,7 @@ from datetime import timedelta
 
 
  # Load the workspace from the saved config file
-ws = Workspace.get(name="eunmldevamlwsgom2",subscription_id='cf11c61d-e6ca-4f6b-b8df-d2a77e8a4d04',           resource_group='SEQ00963-NPRD-EUN-MLDEV-AML-gom2')
+ws = Workspace.get(name="eunmldevamlwsgom3",subscription_id='cf11c61d-e6ca-4f6b-b8df-d2a77e8a4d04',           resource_group='SEQ00963-NPRD-EUN-MLDEV-AML-gom3')
 print('Ready to use Azure ML {} to work with {}'.format(azureml.core.VERSION, ws.name))
 run = Run.get_context()
 
@@ -71,6 +71,7 @@ capacitydf.set_index(['Week'], inplace=True)
 # PreProcessing
 # URSA
 rawdf = pu.preprocessing(rawdf)
+rawdf['AlternateESD'] = rawdf['ESD_WeekNumber']
 
 # Initialize CapcityTrackingdataframe
 capacitytrackingdf = capacitydf.copy()
